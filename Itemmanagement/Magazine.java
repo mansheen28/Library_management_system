@@ -72,7 +72,6 @@ public class Magazine extends Item {
         this.issueNumber = sc.nextLine();
     }
 
-
     public static boolean removeItemById(int id) {
         List<Magazine> magazines = readAllMagazines();
         boolean itemRemoved = magazines.removeIf(magazine -> magazine.getId() == id);
@@ -90,5 +89,11 @@ public class Magazine extends Item {
         }
 
         return itemRemoved;
+    }
+
+    @Override
+    public String toString() {
+        return "Magazine [ID=" + id + ", Title=" + title + ", Genre=" + genre + ", Availability=" + availability
+                + ", Issue Number=" + issueNumber + "]";
     }
 }

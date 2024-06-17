@@ -91,4 +91,10 @@ public class Book extends Item {
         return itemRemoved;
     }
 
+    @Override
+    public String toString() {
+        return "Book [ID=" + id + ", Title=" + title + ", Genre=" + genre + ", Availability=" + availability
+                + ", Author=" + author + "]";
+    }
+
 }

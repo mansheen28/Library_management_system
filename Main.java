@@ -32,7 +32,7 @@ class Main {
                     callRemove();
                     break;
                 case 4:
-                    // listAllItems();
+                    callSearch();
                     break;
                 case 5:
                     exit = true;
@@ -50,7 +50,7 @@ class Main {
         System.out.println("1. Insert New Item");
         System.out.println("2. Update Existing Item");
         System.out.println("3. Remove Item by ID");
-        System.out.println("4. List All Items");
+        System.out.println("4. Search an Item");
         System.out.println("5. Exit");
         System.out.print("Enter your choice: ");
     }
@@ -109,7 +109,6 @@ class Main {
         }
     }
 
-
     public static void callRemove() {
         System.out.print("Enter the item type (Book, Magazine, DVD): ");
         String itemType = sc.nextLine();
@@ -124,4 +123,16 @@ class Main {
             System.out.println("Item with ID " + id + " not found.");
         }
     }
+
+    public static void callSearch() {
+        System.out.println("Enter the Item to search (Book, Magazine, Dvd): ");
+        String inputUpdatedItem = sc.nextLine();
+
+        System.out.print("Enter the ID of the item to search: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        Item searchedItem = Item.searchItemById(id, inputUpdatedItem);
+        System.out.println(searchedItem.toString());
+    }
+
 }

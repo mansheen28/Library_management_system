@@ -72,8 +72,7 @@ public class Dvd extends Item {
         this.director = sc.nextLine();
     }
 
-
-     public static boolean removeItemById(int id) {
+    public static boolean removeItemById(int id) {
         List<Dvd> dvds = readAllDvds();
         boolean itemRemoved = dvds.removeIf(dvd -> dvd.getId() == id);
 
@@ -90,6 +89,12 @@ public class Dvd extends Item {
         }
 
         return itemRemoved;
+    }
+
+    @Override
+    public String toString() {
+        return "Dvd [ID=" + id + ", Title=" + title + ", Genre=" + genre + ", Availability=" + availability
+                + ", Director=" + director + "]";
     }
 
 }

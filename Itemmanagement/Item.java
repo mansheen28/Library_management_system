@@ -62,7 +62,7 @@ public abstract class Item {
     public abstract String getFilePath();
 
     public static Item searchItemById(int id, String inputUpdatedItem) {
-        
+
         List<Item> itemsToSearch = new ArrayList<>();
         switch (inputUpdatedItem.toLowerCase()) {
             case "book":
@@ -90,7 +90,7 @@ public abstract class Item {
 
     public abstract void updateItem(Scanner sc);
 
-     public static boolean removeItemById(int id, String itemType) {
+    public static boolean removeItemById(int id, String itemType) {
         List<Item> itemsToKeep = new ArrayList<>();
         boolean itemRemoved = false;
         String filePath = "";
@@ -136,4 +136,7 @@ public abstract class Item {
 
         return itemRemoved;
     }
+
+    @Override
+    public abstract String toString();
 }
