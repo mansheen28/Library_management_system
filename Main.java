@@ -8,12 +8,20 @@ import java.util.List;
 import java.util.Scanner;
 
 import Itemmanagement.*;
+import common.Common;
 
 class Main {
 
     public static final Scanner sc = new Scanner(System.in);
 
-    public static Item getCommaSeparatedInput() {
+    public static void main(String[] args) {
+
+        callInsert();
+        callUpdate();
+
+    }
+
+    public static void callInsert() {
         System.out.print("Enter the item type (Book, Magazine, DVD): ");
         String itemType = sc.nextLine();
         System.out.print("Id: ");
@@ -44,14 +52,12 @@ class Main {
         } else {
             System.out.println("Invalid type entered");
             sc.close();
-            return null;
+            return;
         }
-        return item;
+         item.insertItem();
     }
 
-    public static void main(String[] args) {
-        // Item inputItem = getCommaSeparatedInput();
-        // inputItem.insertItem();
+    public static void callUpdate() {
         System.out.println("Enter the Item to update (Book, Magazine, Dvd): ");
         String inputUpdatedItem = sc.nextLine();
 
@@ -65,40 +71,12 @@ class Main {
             System.out.println("Enter new details for the item:");
             item.updateItem(sc);
             // Code to save updated item back to file
-            saveUpdatedItem(item);
+            Common.saveUpdatedItem(item);
         } else {
             System.out.println("Item with ID " + id + " not found.");
         }
 
         sc.close();
-
-    }
-
-    public static void saveUpdatedItem(Item updatedItem) {
-        String filePath = updatedItem.getFilePath();
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (Integer.parseInt(parts[0]) == updatedItem.getId()) {
-                    lines.add(updatedItem.dataToSave());
-                } else {
-                    lines.add(line);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            for (String line : lines) {
-                bw.write(line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    } 
 
 }

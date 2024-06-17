@@ -56,13 +56,7 @@ public abstract class Item {
 
     public abstract String dataToSave();
 
-    public void insertItem() {
-        try (FileWriter fw = new FileWriter(getFilePath(), true)) {
-            fw.write(dataToSave() + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public abstract void insertItem();
 
     public abstract String getFilePath();
 
@@ -92,16 +86,6 @@ public abstract class Item {
 
         return null;
     }
-
-
-    
-
-        
-
-        
-
-        
-    
 
     public abstract void updateItem(Scanner sc);
 }
