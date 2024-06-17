@@ -15,10 +15,44 @@ class Main {
     public static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        boolean exit = false;
+        while (!exit) {
+            printMenu();
+            int choice = sc.nextInt();
+            sc.nextLine(); // Consume newline
 
-        callInsert();
-        callUpdate();
+            switch (choice) {
+                case 1:
+                    callInsert();
+                    break;
+                case 2:
+                    callUpdate();
+                    break;
+                case 3:
+                    // searchItemById();
+                    break;
+                case 4:
+                    // listAllItems();
+                    break;
+                case 5:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+        sc.close();
 
+    }
+
+    private static void printMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Insert New Item");
+        System.out.println("2. Update Existing Item");
+        System.out.println("3. Search Item by ID");
+        System.out.println("4. List All Items");
+        System.out.println("5. Exit");
+        System.out.print("Enter your choice: ");
     }
 
     public static void callInsert() {
@@ -51,10 +85,9 @@ class Main {
             item = new Dvd(id, title, genre, availability, director);
         } else {
             System.out.println("Invalid type entered");
-            sc.close();
             return;
         }
-         item.insertItem();
+        item.insertItem();
     }
 
     public static void callUpdate() {
@@ -67,7 +100,6 @@ class Main {
 
         Item item = Item.searchItemById(id, inputUpdatedItem);
         if (item != null) {
-            System.out.println("Item found: " + item);
             System.out.println("Enter new details for the item:");
             item.updateItem(sc);
             // Code to save updated item back to file
@@ -75,8 +107,6 @@ class Main {
         } else {
             System.out.println("Item with ID " + id + " not found.");
         }
-
-        sc.close();
-    } 
+    }
 
 }
