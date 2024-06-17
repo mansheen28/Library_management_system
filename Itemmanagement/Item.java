@@ -1,5 +1,6 @@
 package Itemmanagement;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 // import java.io.*;
@@ -88,4 +89,51 @@ public abstract class Item {
     }
 
     public abstract void updateItem(Scanner sc);
+
+     public static boolean removeItemById(int id, String itemType) {
+        List<Item> itemsToKeep = new ArrayList<>();
+        boolean itemRemoved = false;
+        String filePath = "";
+
+        switch (itemType.toLowerCase()) {
+            case "book":
+                itemsToKeep.addAll(Book.readAllBooks());
+                filePath = Book.fileName;
+                break;
+            case "magazine":
+                itemsToKeep.addAll(Magazine.readAllMagazines());
+                filePath = Magazine.fileName;
+                break;
+            case "dvd":
+                itemsToKeep.addAll(Dvd.readAllDvds());
+                filePath = Dvd.fileName;
+                break;
+            default:
+                System.out.println("Unknown item type: " + itemType);
+                return false;
+        }
+
+        Iterator<Item> iterator = itemsToKeep.iterator();
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            if (item.getId() == id) {
+                iterator.remove();
+                itemRemoved = true;
+            }
+        }
+
+        if (itemRemoved) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                for (Item item : itemsToKeep) {
+                    writer.write(item.dataToSave());
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return itemRemoved;
+    }
 }

@@ -1,7 +1,9 @@
 package Itemmanagement;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import common.Common;
 
 public class Magazine extends Item {
     private String issueNumber;
-    private static String fileName = "magazine.txt";
+    protected static String fileName = "magazine.txt";
 
     public Magazine(int id, String title, String genre, String availability, String issueNumber) {
         super(id, title, genre, availability);
@@ -68,5 +70,25 @@ public class Magazine extends Item {
         this.availability = sc.nextLine();
         System.out.print("Enter new issuenumber: ");
         this.issueNumber = sc.nextLine();
+    }
+
+
+    public static boolean removeItemById(int id) {
+        List<Magazine> magazines = readAllMagazines();
+        boolean itemRemoved = magazines.removeIf(magazine -> magazine.getId() == id);
+
+        if (itemRemoved) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                for (Magazine magazine : magazines) {
+                    writer.write(magazine.dataToSave());
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return itemRemoved;
     }
 }

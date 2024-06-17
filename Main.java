@@ -29,7 +29,7 @@ class Main {
                     callUpdate();
                     break;
                 case 3:
-                    // searchItemById();
+                    callRemove();
                     break;
                 case 4:
                     // listAllItems();
@@ -49,7 +49,7 @@ class Main {
         System.out.println("Menu:");
         System.out.println("1. Insert New Item");
         System.out.println("2. Update Existing Item");
-        System.out.println("3. Search Item by ID");
+        System.out.println("3. Remove Item by ID");
         System.out.println("4. List All Items");
         System.out.println("5. Exit");
         System.out.print("Enter your choice: ");
@@ -109,4 +109,19 @@ class Main {
         }
     }
 
+
+    public static void callRemove() {
+        System.out.print("Enter the item type (Book, Magazine, DVD): ");
+        String itemType = sc.nextLine();
+        System.out.print("Enter the ID of the item to remove: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        boolean removed = Item.removeItemById(id, itemType);
+        if (removed) {
+            System.out.println("Item removed successfully.");
+        } else {
+            System.out.println("Item with ID " + id + " not found.");
+        }
+    }
 }

@@ -1,7 +1,9 @@
 package Itemmanagement;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import common.Common;
 
 public class Dvd extends Item {
     private String director;
-    private static String fileName = "dvd.txt";
+    protected static String fileName = "dvd.txt";
 
     public Dvd(int id, String title, String genre, String availability, String director) {
         super(id, title, genre, availability);
@@ -68,6 +70,26 @@ public class Dvd extends Item {
         this.availability = sc.nextLine();
         System.out.print("Enter new director: ");
         this.director = sc.nextLine();
+    }
+
+
+     public static boolean removeItemById(int id) {
+        List<Dvd> dvds = readAllDvds();
+        boolean itemRemoved = dvds.removeIf(dvd -> dvd.getId() == id);
+
+        if (itemRemoved) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                for (Dvd dvd : dvds) {
+                    writer.write(dvd.dataToSave());
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return itemRemoved;
     }
 
 }
