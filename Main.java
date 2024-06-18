@@ -1,13 +1,7 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import Itemmanagement.*;
+import Usermanagement.User;
 import common.Common;
 
 class Main {
@@ -15,7 +9,7 @@ class Main {
     public static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        boolean exit = false;
+        boolean exit = true;
         while (!exit) {
             printMenu();
             int choice = sc.nextInt();
@@ -41,6 +35,9 @@ class Main {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+
+        System.out.println("Enter the User details to add a new user: ");
+        callUserDetailsRole();
         sc.close();
 
     }
@@ -135,4 +132,24 @@ class Main {
         System.out.println(searchedItem.toString());
     }
 
+    public static void callUserDetailsRole() {
+        System.out.print("Enter User ID: ");
+        String userID = sc.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Role (Admin, Librarian, Member): ");
+        String role = sc.nextLine();
+
+        System.out.print("Enter Contact Information: ");
+        String contactInfo = sc.nextLine();
+
+        // Create a new User object
+        User newUser = new User(userID, name, role, contactInfo);
+
+        // Save user details to users.txt file
+        User.saveUserToFile(newUser);
+
+    }
 }
