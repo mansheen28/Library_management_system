@@ -114,4 +114,20 @@ public class User {
         }
         return null;
     }
+
+    // Method to remove a user by ID
+    public static void removeUserById(String userID) {
+        List<User> users = readUsersFromFile();
+        try (FileWriter fileWriter = new FileWriter("users.txt")) {
+            for (User user : users) {
+                if (!user.getUserID().equals(userID)) {
+                    fileWriter.write(user.toString() + System.lineSeparator());
+                }
+            }
+            System.out.println("User removed successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while removing user details.");
+            e.printStackTrace();
+        }
+    }
 }

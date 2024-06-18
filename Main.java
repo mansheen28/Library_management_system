@@ -9,7 +9,7 @@ class Main {
     public static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        boolean exit = true;
+        boolean exit = false;
         while (!exit) {
             printMenu();
             int choice = sc.nextInt();
@@ -29,17 +29,24 @@ class Main {
                     callSearch();
                     break;
                 case 5:
-                    exit = true;
+                    callUserDetailsRole();
+
                     break;
+                case 6:
+                    callUpdateUser();
+
+                    break;
+                case 7:
+                    callRemoveUser();
+
+                    break;
+                case 8:
+                    exit = true;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
 
-        System.out.println("Enter the User details to add a new user: ");
-        callUserDetailsRole();
-        System.out.println("Enter the User details to update the user: ");
-        callUpdateUser();
         sc.close();
     }
 
@@ -49,8 +56,10 @@ class Main {
         System.out.println("2. Update Existing Item");
         System.out.println("3. Remove Item by ID");
         System.out.println("4. Search an Item");
-        System.out.println("5. Update User Information");
-        System.out.println("6. Exit");
+        System.out.println("5. Enter the User details to add a new user: ");
+        System.out.println("6. Update User Information");
+        System.out.println("7. Remove User");
+        System.out.println("8. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -160,7 +169,7 @@ class Main {
 
         User user = User.findUserById(userID);
         if (user != null) {
-            System.out.println("Current details: " + user);
+            System.out.println("Current details: " + user.toString());
 
             System.out.print("Enter new Name (leave blank to keep current): ");
             String name = sc.nextLine();
@@ -182,6 +191,18 @@ class Main {
 
             // Update user details in the file
             User.updateUserInFile(user);
+        } else {
+            System.out.println("User with ID " + userID + " not found.");
+        }
+    }
+
+    public static void callRemoveUser() {
+        System.out.print("Enter User ID to remove: ");
+        String userID = sc.nextLine();
+
+        User user = User.findUserById(userID);
+        if (user != null) {
+            User.removeUserById(userID);
         } else {
             System.out.println("User with ID " + userID + " not found.");
         }

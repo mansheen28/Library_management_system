@@ -1,4 +1,2 @@
 1,mansheen,Admin,000
-2,manshu,Member,23455
 U001,Alice,Librarian,alice@example.com
-3,rayman,Member,334
