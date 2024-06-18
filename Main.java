@@ -1,8 +1,11 @@
+import java.util.List;
 import java.util.Scanner;
 
 import Itemmanagement.*;
 import Usermanagement.User;
 import common.Common;
+import lendReturnManagement.Lending;
+import lendReturnManagement.ReturnItem;
 
 class Main {
 
@@ -26,27 +29,34 @@ class Main {
                     callRemove();
                     break;
                 case 4:
-                    callSearch();
+                    callSearchItem();
                     break;
                 case 5:
+                    callUpdateUser();
+                    break;
+                case 6:
+                    callRemoveUser();
+                    break;
+                case 7:
+                    callSearchUser();
+                    break;
+                case 8:
                     callUserDetailsRole();
 
                     break;
-                case 6:
-                    callUpdateUser();
-
+                case 9:
+                    callLendItem();
                     break;
-                case 7:
-                    callRemoveUser();
-
+                case 10:
+                    callReturnItem();
                     break;
-                case 8:
+                case 11:
                     exit = true;
+                    break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-
         sc.close();
     }
 
@@ -56,10 +66,13 @@ class Main {
         System.out.println("2. Update Existing Item");
         System.out.println("3. Remove Item by ID");
         System.out.println("4. Search an Item");
-        System.out.println("5. Enter the User details to add a new user: ");
-        System.out.println("6. Update User Information");
-        System.out.println("7. Remove User");
-        System.out.println("8. Exit");
+        System.out.println("5. Update User Information");
+        System.out.println("6. Remove User");
+        System.out.println("7. Search User");
+        System.out.println("8. Add a new user");
+        System.out.println("9. Lend an Item");
+        System.out.println("10. Return an Item");
+        System.out.println("11. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -132,7 +145,7 @@ class Main {
         }
     }
 
-    public static void callSearch() {
+    public static void callSearchItem() {
         System.out.println("Enter the Item to search (Book, Magazine, Dvd): ");
         String inputUpdatedItem = sc.nextLine();
 
@@ -206,5 +219,41 @@ class Main {
         } else {
             System.out.println("User with ID " + userID + " not found.");
         }
+    }
+
+    public static void callSearchUser() {
+        System.out.print("Enter name to search (leave blank if not searching by name): ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter role to search (leave blank if not searching by role): ");
+        String role = sc.nextLine();
+
+        List<User> matchingUsers = User.searchUsers(name, role);
+        if (matchingUsers.isEmpty()) {
+            System.out.println("No users found matching the criteria.");
+        } else {
+            System.out.println("Matching users:");
+            for (User user : matchingUsers) {
+                System.out.println(user.toString());
+            }
+        }
+    }
+
+    public static void callLendItem() {
+        System.out.print("Enter User ID: ");
+        String userID = sc.nextLine();
+        System.out.print("Enter Item ID: ");
+        int itemID = sc.nextInt();
+        sc.nextLine(); // Consume newline
+        System.out.print("Enter the item type (Book, Magazine, DVD): ");
+        String itemType = sc.nextLine();
+        Lending.lendItem(userID, itemID, itemType);
+    }
+
+    public static void callReturnItem() {
+        System.out.print("Enter Item ID to return: ");
+        int itemID = sc.nextInt();
+        sc.nextLine(); // Consume newline
+        ReturnItem.returnItem(itemID);
     }
 }

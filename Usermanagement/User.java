@@ -130,4 +130,17 @@ public class User {
             e.printStackTrace();
         }
     }
+
+    // Method to search users by name or role
+    public static List<User> searchUsers(String name, String role) {
+        List<User> users = readUsersFromFile();
+        List<User> matchingUsers = new ArrayList<>();
+        for (User user : users) {
+            if ((name != null && !name.isEmpty() && user.getName().equalsIgnoreCase(name)) ||
+                    (role != null && !role.isEmpty() && user.getRole().equalsIgnoreCase(role))) {
+                matchingUsers.add(user);
+            }
+        }
+        return matchingUsers;
+    }
 }
