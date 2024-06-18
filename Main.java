@@ -20,7 +20,7 @@ class Main {
                     callInsert();
                     break;
                 case 2:
-                    callUpdate();
+                    callUpdateItem();
                     break;
                 case 3:
                     callRemove();
@@ -38,8 +38,9 @@ class Main {
 
         System.out.println("Enter the User details to add a new user: ");
         callUserDetailsRole();
+        System.out.println("Enter the User details to update the user: ");
+        callUpdateUser();
         sc.close();
-
     }
 
     private static void printMenu() {
@@ -48,7 +49,8 @@ class Main {
         System.out.println("2. Update Existing Item");
         System.out.println("3. Remove Item by ID");
         System.out.println("4. Search an Item");
-        System.out.println("5. Exit");
+        System.out.println("5. Update User Information");
+        System.out.println("6. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -87,7 +89,7 @@ class Main {
         item.insertItem();
     }
 
-    public static void callUpdate() {
+    public static void callUpdateItem() {
         System.out.println("Enter the Item to update (Book, Magazine, Dvd): ");
         String inputUpdatedItem = sc.nextLine();
 
@@ -150,6 +152,38 @@ class Main {
 
         // Save user details to users.txt file
         User.saveUserToFile(newUser);
+    }
 
+    public static void callUpdateUser() {
+        System.out.print("Enter User ID to update: ");
+        String userID = sc.nextLine();
+
+        User user = User.findUserById(userID);
+        if (user != null) {
+            System.out.println("Current details: " + user);
+
+            System.out.print("Enter new Name (leave blank to keep current): ");
+            String name = sc.nextLine();
+            if (!name.isEmpty()) {
+                user.setName(name);
+            }
+
+            System.out.print("Enter new Role (leave blank to keep current): ");
+            String role = sc.nextLine();
+            if (!role.isEmpty()) {
+                user.setRole(role);
+            }
+
+            System.out.print("Enter new Contact Information (leave blank to keep current): ");
+            String contactInfo = sc.nextLine();
+            if (!contactInfo.isEmpty()) {
+                user.setContactInfo(contactInfo);
+            }
+
+            // Update user details in the file
+            User.updateUserInFile(user);
+        } else {
+            System.out.println("User with ID " + userID + " not found.");
+        }
     }
 }

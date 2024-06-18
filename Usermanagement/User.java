@@ -1,7 +1,8 @@
 package Usermanagement;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -65,5 +66,52 @@ public class User {
             System.out.println("An error occurred while saving user details.");
             e.printStackTrace();
         }
+    }
+
+    // Method to read all users from the file
+    public static List<User> readUsersFromFile() {
+        List<User> users = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] details = line.split(",");
+                if (details.length == 4) {
+                    users.add(new User(details[0], details[1], details[2], details[3]));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading user details.");
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    // Method to update user details in the file
+    public static void updateUserInFile(User updatedUser) {
+        List<User> users = readUsersFromFile();
+        try (FileWriter fileWriter = new FileWriter("users.txt")) {
+            for (User user : users) {
+                if (user.getUserID().equals(updatedUser.getUserID())) {
+                    fileWriter.write(updatedUser.toString() + System.lineSeparator());
+                } else {
+                    fileWriter.write(user.toString() + System.lineSeparator());
+                }
+            }
+            System.out.println("User details updated successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while updating user details.");
+            e.printStackTrace();
+        }
+    }
+
+    // Method to find a user by ID
+    public static User findUserById(String userID) {
+        List<User> users = readUsersFromFile();
+        for (User user : users) {
+            if (user.getUserID().equals(userID)) {
+                return user;
+            }
+        }
+        return null;
     }
 }
