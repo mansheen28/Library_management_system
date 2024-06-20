@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.Scanner;
-
 import Itemmanagement.*;
 import Usermanagement.User;
 import common.Common;
@@ -42,7 +41,6 @@ class Main {
                     break;
                 case 8:
                     callUserDetailsRole();
-
                     break;
                 case 9:
                     callLendItem();
@@ -51,6 +49,12 @@ class Main {
                     callReturnItem();
                     break;
                 case 11:
+                    listAllItems();
+                    break;
+                case 12:
+                    listAllUsers();
+                    break;
+                case 13:
                     exit = true;
                     break;
                 default:
@@ -72,7 +76,9 @@ class Main {
         System.out.println("8. Add a new user");
         System.out.println("9. Lend an Item");
         System.out.println("10. Return an Item");
-        System.out.println("11. Exit");
+        System.out.println("11. List All Items");
+        System.out.println("12. List All Users");
+        System.out.println("13. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -255,5 +261,32 @@ class Main {
         int itemID = sc.nextInt();
         sc.nextLine(); // Consume newline
         ReturnItem.returnItem(itemID);
+    }
+
+    public static void listAllItems() {
+        System.out.println("Listing all Books:");
+        List<Book> books = Book.readAllBooks();
+        for (Book book : books) {
+            System.out.println(book);
+        }
+
+        System.out.println("Listing all Magazines:");
+        List<Magazine> magazines = Magazine.readAllMagazines();
+        for (Magazine magazine : magazines) {
+            System.out.println(magazine);
+        }
+
+        System.out.println("Listing all DVDs:");
+        List<Dvd> dvds = Dvd.readAllDvds();
+        for (Dvd dvd : dvds) {
+            System.out.println(dvd);
+        }
+    }
+
+    public static void listAllUsers() {
+        List<User> users = User.readUsersFromFile();
+        for (User user : users) {
+            System.out.println(user);
+        }
     }
 }
