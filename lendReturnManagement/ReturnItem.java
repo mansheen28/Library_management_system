@@ -52,7 +52,7 @@ public class ReturnItem {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
-                    lendings.add(new Lending(parts[0], Integer.parseInt(parts[1]), parts[3]));
+                    lendings.add(new Lending(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3]));
                 }
             }
         } catch (IOException e) {

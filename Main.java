@@ -55,6 +55,9 @@ class Main {
                     listAllUsers();
                     break;
                 case 13:
+                    listBorrowedItems();
+                    break;
+                case 14:
                     exit = true;
                     break;
                 default:
@@ -78,7 +81,8 @@ class Main {
         System.out.println("10. Return an Item");
         System.out.println("11. List All Items");
         System.out.println("12. List All Users");
-        System.out.println("13. Exit");
+        System.out.println("13. List Borrowed Items");
+        System.out.println("14. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -288,5 +292,10 @@ class Main {
         for (User user : users) {
             System.out.println(user);
         }
+    }
+
+
+    public static void listBorrowedItems() {
+        Lending.listBorrowedItems();
     }
 }
